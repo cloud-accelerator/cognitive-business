@@ -1,55 +1,3 @@
-swagger: '2.0'
-info:
-  x-ibm-name: cognitive-business
-  version: 1.0.0
-  title: cognitive-business
-schemes:
-  - https
-host: $(catalog.host)
-basePath: /api
-consumes:
-  - application/json
-produces:
-  - application/json
-securityDefinitions:
-  clientIdHeader:
-    type: apiKey
-    in: header
-    name: X-IBM-Client-Id
-  clientSecretHeader:
-    in: header
-    name: X-IBM-Client-Secret
-    type: apiKey
-security:
-  - clientIdHeader: []
-    clientSecretHeader: []
-x-ibm-configuration:
-  testable: true
-  enforced: true
-  cors:
-    enabled: true
-  catalogs:
-    apic-dev:
-      properties:
-        runtime-url: $(TARGET_URL)
-    sb:
-      properties:
-        runtime-url: 'https://cognitive-business.mybluemix.net'
-        invoke-tls-profile: 'client:Loopback-client'
-  assembly:
-    execute:
-      - invoke:
-          target-url: $(runtime-url)$(request.path)$(request.search)
-          tls-profile: $(invoke-tls-profile)
-  properties:
-    runtime-url:
-      value: ''
-      description: ''
-      encoded: false
-    invoke-tls-profile:
-      value: ''
-      description: ''
-      encoded: false
 paths:
   '/Users/{id}/accessTokens/{fk}':
     get:
@@ -244,9 +192,7 @@ paths:
     patch:
       tags:
         - User
-      summary: >-
-        Patch an existing model instance or insert a new one into the data
-        source.
+      summary: Patch an existing model instance or insert a new one into the data source.
       operationId: User.patchOrCreate
       parameters:
         - name: data
@@ -265,9 +211,7 @@ paths:
     put:
       tags:
         - User
-      summary: >-
-        Replace an existing model instance or insert a new one into the data
-        source.
+      summary: Replace an existing model instance or insert a new one into the data source.
       operationId: User.replaceOrCreate__put_Users
       parameters:
         - name: data
@@ -291,9 +235,7 @@ paths:
       parameters:
         - name: filter
           in: query
-          description: >-
-            Filter defining fields, where, include, order, offset, and limit -
-            must be a JSON-encoded string ({"something":"value"})
+          description: 'Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})'
           required: false
           type: string
           format: JSON
@@ -309,9 +251,7 @@ paths:
     post:
       tags:
         - User
-      summary: >-
-        Replace an existing model instance or insert a new one into the data
-        source.
+      summary: Replace an existing model instance or insert a new one into the data source.
       operationId: User.replaceOrCreate__post_Users_replaceOrCreate
       parameters:
         - name: data
@@ -331,9 +271,7 @@ paths:
     post:
       tags:
         - User
-      summary: >-
-        Update an existing model instance or insert a new one into the data
-        source based on the where criteria.
+      summary: Update an existing model instance or insert a new one into the data source based on the where criteria.
       operationId: User.upsertWithWhere
       parameters:
         - name: where
@@ -413,9 +351,7 @@ paths:
           format: JSON
         - name: filter
           in: query
-          description: >-
-            Filter defining fields and include - must be a JSON-encoded string
-            ({"something":"value"})
+          description: 'Filter defining fields and include - must be a JSON-encoded string ({"something":"value"})'
           required: false
           type: string
           format: JSON
@@ -428,9 +364,7 @@ paths:
     put:
       tags:
         - User
-      summary: >-
-        Replace attributes for a model instance and persist it into the data
-        source.
+      summary: Replace attributes for a model instance and persist it into the data source.
       operationId: 'User.replaceById__put_Users_{id}'
       parameters:
         - name: id
@@ -473,9 +407,7 @@ paths:
     patch:
       tags:
         - User
-      summary: >-
-        Patch attributes for a model instance and persist it into the data
-        source.
+      summary: Patch attributes for a model instance and persist it into the data source.
       operationId: User.prototype.patchAttributes
       parameters:
         - name: data
@@ -501,9 +433,7 @@ paths:
     post:
       tags:
         - User
-      summary: >-
-        Replace attributes for a model instance and persist it into the data
-        source.
+      summary: Replace attributes for a model instance and persist it into the data source.
       operationId: 'User.replaceById__post_Users_{id}_replace'
       parameters:
         - name: id
@@ -534,9 +464,7 @@ paths:
       parameters:
         - name: filter
           in: query
-          description: >-
-            Filter defining fields, where, include, order, offset, and limit -
-            must be a JSON-encoded string ({"something":"value"})
+          description: 'Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})'
           required: false
           type: string
           format: JSON
@@ -615,9 +543,7 @@ paths:
             type: object
         - name: include
           in: query
-          description: >-
-            Related objects to include in the response. See the description of
-            return value for more details.
+          description: Related objects to include in the response. See the description of return value for more details.
           required: false
           type: string
           format: JSON
@@ -626,11 +552,11 @@ paths:
           description: Request was successful
           schema:
             description: >+
-              The response body contains properties of the AccessToken created
-              on login.
+              The response body contains properties of the AccessToken created on
+              login.
 
-              Depending on the value of `include` parameter, the body may
-              contain additional properties:
+              Depending on the value of `include` parameter, the body may contain
+              additional properties:
 
 
 
@@ -660,7 +586,7 @@ paths:
     post:
       tags:
         - User
-      summary: Trigger user's identity verification with configured verifyOptions
+      summary: "Trigger user's identity verification with configured verifyOptions"
       operationId: User.prototype.verify
       parameters:
         - name: id
@@ -716,7 +642,7 @@ paths:
     post:
       tags:
         - User
-      summary: Change a user's password.
+      summary: "Change a user's password."
       operationId: User.changePassword
       parameters:
         - name: oldPassword
@@ -735,7 +661,7 @@ paths:
     post:
       tags:
         - User
-      summary: Reset user's password via a password-reset token.
+      summary: "Reset user's password via a password-reset token."
       operationId: User.setPassword
       parameters:
         - name: newPassword
@@ -764,6 +690,53 @@ paths:
             properties:
               greeting:
                 type: string
+      deprecated: false
+  '/OutlookMessages/{id}/getMessageWithID':
+    post:
+      tags:
+        - OutlookMessage
+      summary: Returns the messageID for a subject
+      operationId: OutlookMessage.prototype.getMessageWithID
+      parameters:
+        - name: subject
+          in: query
+          description: The subject line of the email
+          required: true
+          type: string
+        - name: id
+          in: path
+          description: OutlookMessage id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+            properties:
+              messageID:
+                description: The messageid corresponding to the subject
+                type: string
+      deprecated: false
+  /OutlookMessages/MoveEmailToInProgress:
+    post:
+      tags:
+        - OutlookMessage
+      summary: move email to in progress
+      operationId: OutlookMessage.moveEmailToInProgress
+      parameters:
+        - name: messageID
+          in: query
+          description: MEssage ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            description: New MEssage ID
+            type: string
       deprecated: false
 definitions:
   x-any:
@@ -807,3 +780,55 @@ definitions:
     required:
       - email
     additionalProperties: false
+basePath: /api
+swagger: '2.0'
+info:
+  x-ibm-name: cognitive-business
+  version: 1.0.0
+  title: cognitive-business
+schemes:
+  - https
+host: $(catalog.host)
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+  clientSecretHeader:
+    in: header
+    name: X-IBM-Client-Secret
+    type: apiKey
+security:
+  - clientIdHeader: []
+    clientSecretHeader: []
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  cors:
+    enabled: true
+  catalogs:
+    apic-dev:
+      properties:
+        runtime-url: $(TARGET_URL)
+    sb:
+      properties:
+        runtime-url: 'https://cognitive-business.mybluemix.net'
+        invoke-tls-profile: 'client:Loopback-client'
+  assembly:
+    execute:
+      - invoke:
+          target-url: $(runtime-url)$(request.path)$(request.search)
+          tls-profile: $(invoke-tls-profile)
+  properties:
+    runtime-url:
+      value: ''
+      description: ''
+      encoded: false
+    invoke-tls-profile:
+      value: ''
+      description: ''
+      encoded: false
