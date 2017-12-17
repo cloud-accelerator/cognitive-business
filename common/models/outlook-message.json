@@ -1,0 +1,75 @@
+{
+  "name": "OutlookMessage",
+  "plural": "OutlookMessages",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "messageID": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "prototype.getMessageWithID": {
+      "accepts": [
+        {
+          "arg": "subject",
+          "type": "string",
+          "required": true,
+          "description": "The subject line of the email",
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "messageID",
+          "type": "string",
+          "root": false,
+          "description": "The messageid corresponding to the subject"
+        }
+      ],
+      "description": "Returns the messageID for a subject",
+      "http": [
+        {
+          "verb": "post"
+        }
+      ]
+    },
+    "moveEmailToInProgress": {
+      "accepts": [
+        {
+          "arg": "messageID",
+          "type": "string",
+          "required": true,
+          "description": "MEssage ID",
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "messageID",
+          "type": "string",
+          "root": true,
+          "description": "New MEssage ID"
+        }
+      ],
+      "description": "move email to in progress",
+      "http": [
+        {
+          "path": "/MoveEmailToInProgress",
+          "verb": "post"
+        }
+      ]
+    }
+  }
+}
