@@ -41,5 +41,13 @@
   "OutlookMessage": {
     "dataSource": null,
     "public": true
+  },
+  "OutlookCalendar": {
+    "dataSource": null,
+    "public": true
+  },
+  "WKSSharepoint": {
+    "dataSource": null,
+    "public": true
   }
 }

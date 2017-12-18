@@ -49,10 +49,7 @@
           "arg": "messageID",
           "type": "string",
           "required": true,
-          "description": "MEssage ID",
-          "http": {
-            "source": "query"
-          }
+          "description": "The message ID"
         }
       ],
       "returns": [
@@ -60,13 +57,88 @@
           "arg": "messageID",
           "type": "string",
           "root": true,
-          "description": "New MEssage ID"
+          "description": "The new message id"
         }
       ],
-      "description": "move email to in progress",
+      "description": "Moves an email to the in progress folder",
       "http": [
         {
           "path": "/MoveEmailToInProgress",
+          "verb": "post"
+        }
+      ]
+    },
+    "MoveEmailToInReview": {
+      "accepts": [
+        {
+          "arg": "messageID",
+          "type": "string",
+          "required": true,
+          "description": "The email ID"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "messageID",
+          "type": "string",
+          "root": true,
+          "description": "The new email ID"
+        }
+      ],
+      "description": "Move an email to the in review folder",
+      "http": [
+        {
+          "path": "/MoveEmailToInReview",
+          "verb": "post"
+        }
+      ]
+    },
+    "MoveEmailToCompleted": {
+      "accepts": [
+        {
+          "arg": "messageID",
+          "type": "string",
+          "required": true,
+          "description": "The email ID"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "messagesID",
+          "type": "string",
+          "root": true,
+          "description": "The new message id"
+        }
+      ],
+      "description": "Move the email to the completed folder",
+      "http": [
+        {
+          "path": "/MoveEmailToCompleted",
+          "verb": "post"
+        }
+      ]
+    },
+    "FindMessageIDForSubject": {
+      "accepts": [
+        {
+          "arg": "subject",
+          "type": "string",
+          "required": true,
+          "description": "The subject of the email"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "messageID",
+          "type": "string",
+          "root": true,
+          "description": "The messageID"
+        }
+      ],
+      "description": "Finds the message ID for email with a subject in the inbox folder",
+      "http": [
+        {
+          "path": "/FindMessageIDForSubject",
           "verb": "post"
         }
       ]

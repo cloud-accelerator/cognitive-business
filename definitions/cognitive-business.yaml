@@ -723,20 +723,290 @@ paths:
     post:
       tags:
         - OutlookMessage
-      summary: move email to in progress
+      summary: Moves an email to the in progress folder
       operationId: OutlookMessage.moveEmailToInProgress
       parameters:
         - name: messageID
-          in: query
-          description: MEssage ID
+          in: formData
+          description: The message ID
           required: true
           type: string
       responses:
         '200':
           description: Request was successful
           schema:
-            description: New MEssage ID
+            description: The new message id
             type: string
+      deprecated: false
+  /OutlookMessages/MoveEmailToInReview:
+    post:
+      tags:
+        - OutlookMessage
+      summary: Move an email to the in review folder
+      operationId: OutlookMessage.MoveEmailToInReview
+      parameters:
+        - name: messageID
+          in: formData
+          description: The email ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            description: The new email ID
+            type: string
+      deprecated: false
+  /OutlookMessages/MoveEmailToCompleted:
+    post:
+      tags:
+        - OutlookMessage
+      summary: Move the email to the completed folder
+      operationId: OutlookMessage.MoveEmailToCompleted
+      parameters:
+        - name: messageID
+          in: formData
+          description: The email ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            description: The new message id
+            type: string
+      deprecated: false
+  /OutlookMessages/FindMessageIDForSubject:
+    post:
+      tags:
+        - OutlookMessage
+      summary: Finds the message ID for email with a subject in the inbox folder
+      operationId: OutlookMessage.FindMessageIDForSubject
+      parameters:
+        - name: subject
+          in: formData
+          description: The subject of the email
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            description: The messageID
+            type: string
+      deprecated: false
+  /Outlook Calendars/IsConflict:
+    post:
+      tags:
+        - OutlookCalendar
+      summary: Returns if there is a conflict in the calendar
+      operationId: OutlookCalendar.IsConflict
+      parameters:
+        - name: startTime
+          in: formData
+          description: start time utc
+          required: true
+          type: number
+          format: double
+        - name: endTime
+          in: formData
+          description: end time utc
+          required: true
+          type: number
+          format: double
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            description: true if there is a conflict
+            type: boolean
+      deprecated: false
+  /Outlook Calendars/RemoveConflictingEvents:
+    post:
+      tags:
+        - OutlookCalendar
+      summary: Removes conflicting events in the calendar
+      operationId: OutlookCalendar.RemoveConflictingEvents
+      parameters:
+        - name: startTime
+          in: formData
+          description: start time utc
+          required: true
+          type: number
+          format: double
+        - name: endTime
+          in: formData
+          description: end time UTC
+          required: true
+          type: number
+          format: double
+      responses:
+        '204':
+          description: Request was successful
+      deprecated: false
+  /Outlook Calendars/AddEvent:
+    post:
+      tags:
+        - OutlookCalendar
+      summary: add a new calendar event
+      operationId: OutlookCalendar.AddEvent
+      parameters:
+        - name: startTime
+          in: formData
+          description: start time UTC
+          required: true
+          type: number
+          format: double
+        - name: endTime
+          in: formData
+          description: end time UTC
+          required: true
+          type: number
+          format: double
+        - name: subject
+          in: formData
+          description: name of event
+          required: true
+          type: string
+      responses:
+        '204':
+          description: Request was successful
+      deprecated: false
+  /WKS Sharepoint/AddToSharepoint:
+    post:
+      tags:
+        - WKSSharepoint
+      summary: Adds WKS data to sharepoint
+      operationId: WKSSharepoint.AddToSharepoint
+      parameters:
+        - name: To
+          in: formData
+          description: To Email
+          required: false
+          type: string
+        - name: From
+          in: formData
+          description: From Email
+          required: false
+          type: string
+        - name: Subject
+          in: formData
+          description: Email Subject
+          required: false
+          type: string
+        - name: NBN_ApptDate
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: NBN_ApptYear
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: NBN_ApptMonth
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: NBN_ApptDay
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: Telstra_ApptDate
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: Telstra_ApptYear
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: Telstra_ApptMonth
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: Telstra_ApptYear
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: Telstra_ApptMonth
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: Telstra_ApptDay
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: NBN_Start
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: NBN_End
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: Telstra_Start
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: Telstra_End
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: Reference_ID
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: NBNInvoiceNumber
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: EmailTypeIndicator
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: Address
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: Suburb
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: Postcode
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: State
+          in: formData
+          description: ''
+          required: false
+          type: string
+        - name: CaseMgrEmail
+          in: formData
+          description: ''
+          required: false
+          type: string
+      responses:
+        '204':
+          description: Request was successful
       deprecated: false
 definitions:
   x-any:
