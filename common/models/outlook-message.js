@@ -46,9 +46,9 @@ module.exports = function(Outlookmessage) {
 var findMessageID = function(token, subject, cb) {
   var body = {
   };
-
+  console.log('https://graph.microsoft.com/v1.0/users/' + demoUser + '/mailFolders/Inbox/messages?$filter=subject eq \'' + subject +  '\'');
   request.get({
-    url: 'https://graph.microsoft.com/v1.0/users/' + demoUser + '/mailFolders/Inbox/messages?filter=equals(subject,"' + subject +  '")"',
+    url: 'https://graph.microsoft.com/v1.0/users/' + demoUser + '/mailFolders/Inbox/messages?$filter=subject eq \'' + subject +  '\'',
     headers: {
       'content-type': 'application/json',
       authorization: 'Bearer ' + token
@@ -59,8 +59,7 @@ var findMessageID = function(token, subject, cb) {
     var returnBody = {};
     if (err) {
       console.error('>>> Application error: ' + err);
-      returnBody = {};
-      cb(null, returnBody);
+      cb(err);
     } else if (body) {
       parsedBody = JSON.parse(body);
 
@@ -75,22 +74,24 @@ var findMessageID = function(token, subject, cb) {
             '>>> Error moving to in progress' + '.' + parsedBody.error.message
           );
         }
-        returnBody = {
-        };
-        cb(null, returnBody);
-      } else if (parsedBody.id) {
+        var error = new Error('Could not authenticate');
+        error.status = 401;
+        cb(error);
+      } else if (parsedBody.value.length > 0) {
         console.log('>>> Successfully moved to in progess');
         returnBody = {
-          'messageID' : parsedBody.id
+          'messageID' : parsedBody.value[0].id
         };
         cb(null, returnBody);
       } else {
-        returnBody = {};
-        cb(null, returnBody);
+        var error = new Error('Not found');
+        error.status = 400;
+        cb(error);
       }
     } else {
-      returnBody = {};
-      cb(null, returnBody);
+      var error = new Error('Not found');
+      error.status = 400;
+      cb(error);
     }
   });
 };
@@ -114,8 +115,7 @@ var moveMessageTo = function(token, messageId, cb, folder) {
     var returnBody = {};
     if (err) {
       console.error('>>> Application error: ' + err);
-      returnBody = {};
-      cb(null, returnBody);
+      cb(err);
     } else if (body) {
       parsedBody = JSON.parse(body);
 
@@ -130,22 +130,24 @@ var moveMessageTo = function(token, messageId, cb, folder) {
             '>>> Error moving to in progress' + '.' + parsedBody.error.message
           );
         }
-        returnBody = {
-        };
-        cb(null, returnBody);
+        var error = new Error('Could not authenticate');
+        error.status = 401;
+        cb(error);
       } else if (parsedBody.id) {
         console.log('>>> Successfully moved to in progess');
-         returnBody = {
+        returnBody = {
           'messageID' : parsedBody.id
         };
         cb(null, returnBody);
       } else {
-        returnBody = {};
-        cb(null, returnBody);
+        var error = new Error('Not found');
+        error.status = 400;
+        cb(error);
       }
     } else {
-      returnBody = {};
-      cb(null, returnBody);
+      var error = new Error('Not found');
+      error.status = 400;
+      cb(error);
     }
   });
 };
