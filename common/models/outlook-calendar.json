@@ -1,0 +1,113 @@
+{
+  "name": "OutlookCalendar",
+  "plural": "OutlookCalendars",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "startDate": {
+      "type": "number",
+      "required": true
+    },
+    "endTime": {
+      "type": "number",
+      "required": true
+    },
+    "subject": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "IsConflict": {
+      "accepts": [
+        {
+          "arg": "startTime",
+          "type": "number",
+          "required": true,
+          "description": "start time utc"
+        },
+        {
+          "arg": "endTime",
+          "type": "number",
+          "required": true,
+          "description": "end time utc"
+        }
+      ],
+      "returns": [
+        {
+          "arg": "conflict",
+          "type": "boolean",
+          "root": true,
+          "description": "true if there is a conflict"
+        }
+      ],
+      "description": "Returns if there is a conflict in the calendar",
+      "http": [
+        {
+          "path": "/IsConflict",
+          "verb": "post"
+        }
+      ]
+    },
+    "RemoveConflictingEvents": {
+      "accepts": [
+        {
+          "arg": "startTime",
+          "type": "number",
+          "required": true,
+          "description": "start time utc"
+        },
+        {
+          "arg": "endTime",
+          "type": "number",
+          "required": true,
+          "description": "end time UTC"
+        }
+      ],
+      "returns": [],
+      "description": "Removes conflicting events in the calendar",
+      "http": [
+        {
+          "path": "/RemoveConflictingEvents",
+          "verb": "post"
+        }
+      ]
+    },
+    "AddEvent": {
+      "accepts": [
+        {
+          "arg": "startTime",
+          "type": "number",
+          "required": true,
+          "description": "start time UTC"
+        },
+        {
+          "arg": "endTime",
+          "type": "number",
+          "required": true,
+          "description": "end time UTC"
+        },
+        {
+          "arg": "subject",
+          "type": "string",
+          "required": true,
+          "description": "name of event"
+        }
+      ],
+      "returns": [],
+      "description": "add a new calendar event",
+      "http": [
+        {
+          "path": "/AddEvent",
+          "verb": "post"
+        }
+      ]
+    }
+  }
+}

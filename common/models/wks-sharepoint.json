@@ -1,0 +1,238 @@
+{
+  "name": "WKSSharepoint",
+  "plural": "WKSSharepoint",
+  "base": "Model",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "To": {
+      "type": "string"
+    },
+    "from": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "NBN_AppDate": {
+      "type": "string"
+    },
+    "NBN_ApptYear": {
+      "type": "string"
+    },
+    "NBN_ApptMonth": {
+      "type": "string"
+    },
+    "NBN_ApptDay": {
+      "type": "string"
+    },
+    "Telstra_ApptDate": {
+      "type": "string"
+    },
+    "Telstra_ApptYear": {
+      "type": "string"
+    },
+    "Telstra": {
+      "type": "string"
+    },
+    "Telstra_ApptMonth": {
+      "type": "string"
+    },
+    "Telstra_ApptDay": {
+      "type": "string"
+    },
+    "NBN_Start": {
+      "type": "string"
+    },
+    "NBN_End": {
+      "type": "string"
+    },
+    "Telstra_Start": {
+      "type": "string"
+    },
+    "Telstra_End": {
+      "type": "string"
+    },
+    "Reference_ID": {
+      "type": "string"
+    },
+    "NBN_InvoiceNumber": {
+      "type": "string"
+    },
+    "EmailTypeIndicator": {
+      "type": "string"
+    },
+    "Address": {
+      "type": "string"
+    },
+    "Suburb": {
+      "type": "string"
+    },
+    "Postcode": {
+      "type": "string"
+    },
+    "State": {
+      "type": "string"
+    },
+    "CaseMgrEmail": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "AddToSharepoint": {
+      "accepts": [
+        {
+          "arg": "To",
+          "type": "string",
+          "required": false,
+          "description": "To Email"
+        },
+        {
+          "arg": "From",
+          "type": "string",
+          "required": false,
+          "description": "From Email"
+        },
+        {
+          "arg": "Subject",
+          "type": "string",
+          "required": false,
+          "description": "Email Subject"
+        },
+        {
+          "arg": "NBN_ApptDate",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "NBN_ApptYear",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "NBN_ApptMonth",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "NBN_ApptDay",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "Telstra_ApptDate",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "Telstra_ApptYear",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "Telstra_ApptMonth",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "Telstra_ApptDay",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "NBN_Start",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "NBN_End",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "Telstra_Start",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "Telstra_End",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "Reference_ID",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "NBNInvoiceNumber",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "EmailTypeIndicator",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "Address",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "Suburb",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "Postcode",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "State",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "CaseMgrEmail",
+          "type": "string",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "returns": [],
+      "description": "Adds WKS data to sharepoint",
+      "http": [
+        {
+          "path": "/AddToSharepoint",
+          "verb": "post"
+        }
+      ]
+    }
+  }
+}

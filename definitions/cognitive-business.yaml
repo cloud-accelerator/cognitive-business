@@ -192,7 +192,9 @@ paths:
     patch:
       tags:
         - User
-      summary: Patch an existing model instance or insert a new one into the data source.
+      summary: >-
+        Patch an existing model instance or insert a new one into the data
+        source.
       operationId: User.patchOrCreate
       parameters:
         - name: data
@@ -211,7 +213,9 @@ paths:
     put:
       tags:
         - User
-      summary: Replace an existing model instance or insert a new one into the data source.
+      summary: >-
+        Replace an existing model instance or insert a new one into the data
+        source.
       operationId: User.replaceOrCreate__put_Users
       parameters:
         - name: data
@@ -235,7 +239,9 @@ paths:
       parameters:
         - name: filter
           in: query
-          description: 'Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})'
+          description: >-
+            Filter defining fields, where, include, order, offset, and limit -
+            must be a JSON-encoded string ({"something":"value"})
           required: false
           type: string
           format: JSON
@@ -251,7 +257,9 @@ paths:
     post:
       tags:
         - User
-      summary: Replace an existing model instance or insert a new one into the data source.
+      summary: >-
+        Replace an existing model instance or insert a new one into the data
+        source.
       operationId: User.replaceOrCreate__post_Users_replaceOrCreate
       parameters:
         - name: data
@@ -271,7 +279,9 @@ paths:
     post:
       tags:
         - User
-      summary: Update an existing model instance or insert a new one into the data source based on the where criteria.
+      summary: >-
+        Update an existing model instance or insert a new one into the data
+        source based on the where criteria.
       operationId: User.upsertWithWhere
       parameters:
         - name: where
@@ -351,7 +361,9 @@ paths:
           format: JSON
         - name: filter
           in: query
-          description: 'Filter defining fields and include - must be a JSON-encoded string ({"something":"value"})'
+          description: >-
+            Filter defining fields and include - must be a JSON-encoded string
+            ({"something":"value"})
           required: false
           type: string
           format: JSON
@@ -364,7 +376,9 @@ paths:
     put:
       tags:
         - User
-      summary: Replace attributes for a model instance and persist it into the data source.
+      summary: >-
+        Replace attributes for a model instance and persist it into the data
+        source.
       operationId: 'User.replaceById__put_Users_{id}'
       parameters:
         - name: id
@@ -407,7 +421,9 @@ paths:
     patch:
       tags:
         - User
-      summary: Patch attributes for a model instance and persist it into the data source.
+      summary: >-
+        Patch attributes for a model instance and persist it into the data
+        source.
       operationId: User.prototype.patchAttributes
       parameters:
         - name: data
@@ -433,7 +449,9 @@ paths:
     post:
       tags:
         - User
-      summary: Replace attributes for a model instance and persist it into the data source.
+      summary: >-
+        Replace attributes for a model instance and persist it into the data
+        source.
       operationId: 'User.replaceById__post_Users_{id}_replace'
       parameters:
         - name: id
@@ -464,7 +482,9 @@ paths:
       parameters:
         - name: filter
           in: query
-          description: 'Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({"something":"value"})'
+          description: >-
+            Filter defining fields, where, include, order, offset, and limit -
+            must be a JSON-encoded string ({"something":"value"})
           required: false
           type: string
           format: JSON
@@ -543,7 +563,9 @@ paths:
             type: object
         - name: include
           in: query
-          description: Related objects to include in the response. See the description of return value for more details.
+          description: >-
+            Related objects to include in the response. See the description of
+            return value for more details.
           required: false
           type: string
           format: JSON
@@ -552,11 +574,11 @@ paths:
           description: Request was successful
           schema:
             description: >+
-              The response body contains properties of the AccessToken created on
-              login.
+              The response body contains properties of the AccessToken created
+              on login.
 
-              Depending on the value of `include` parameter, the body may contain
-              additional properties:
+              Depending on the value of `include` parameter, the body may
+              contain additional properties:
 
 
 
@@ -586,7 +608,7 @@ paths:
     post:
       tags:
         - User
-      summary: "Trigger user's identity verification with configured verifyOptions"
+      summary: Trigger user's identity verification with configured verifyOptions
       operationId: User.prototype.verify
       parameters:
         - name: id
@@ -642,7 +664,7 @@ paths:
     post:
       tags:
         - User
-      summary: "Change a user's password."
+      summary: Change a user's password.
       operationId: User.changePassword
       parameters:
         - name: oldPassword
@@ -661,7 +683,7 @@ paths:
     post:
       tags:
         - User
-      summary: "Reset user's password via a password-reset token."
+      summary: Reset user's password via a password-reset token.
       operationId: User.setPassword
       parameters:
         - name: newPassword
@@ -795,7 +817,7 @@ paths:
             description: The messageID
             type: string
       deprecated: false
-  /Outlook Calendars/IsConflict:
+  /OutlookCalendars/IsConflict:
     post:
       tags:
         - OutlookCalendar
@@ -821,7 +843,7 @@ paths:
             description: true if there is a conflict
             type: boolean
       deprecated: false
-  /Outlook Calendars/RemoveConflictingEvents:
+  /OutlookCalendars/RemoveConflictingEvents:
     post:
       tags:
         - OutlookCalendar
@@ -844,7 +866,7 @@ paths:
         '204':
           description: Request was successful
       deprecated: false
-  /Outlook Calendars/AddEvent:
+  /OutlookCalendars/AddEvent:
     post:
       tags:
         - OutlookCalendar
@@ -872,7 +894,7 @@ paths:
         '204':
           description: Request was successful
       deprecated: false
-  /WKS Sharepoint/AddToSharepoint:
+  /WKSSharepoint/AddToSharepoint:
     post:
       tags:
         - WKSSharepoint
@@ -915,16 +937,6 @@ paths:
           required: false
           type: string
         - name: Telstra_ApptDate
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: Telstra_ApptYear
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: Telstra_ApptMonth
           in: formData
           description: ''
           required: false
@@ -1050,7 +1062,7 @@ definitions:
     required:
       - email
     additionalProperties: false
-basePath: /api
+basePath: /cloud-accelerator-cognitive-business/sb/api
 swagger: '2.0'
 info:
   x-ibm-name: cognitive-business
@@ -1058,7 +1070,7 @@ info:
   title: cognitive-business
 schemes:
   - https
-host: $(catalog.host)
+host: 'https://api.us.apiconnect.ibmcloud.com/'
 consumes:
   - application/json
 produces:
