@@ -805,17 +805,17 @@ paths:
       summary: Finds the message ID for email with a subject in the inbox folder
       operationId: OutlookMessage.FindMessageIDForSubject
       parameters:
-        - name: subject
-          in: formData
+        - name: message-subject
+          in: body
           description: The subject of the email
           required: true
-          type: string
+          schema:
+            $ref: '#/definitions/Message-Subject'
       responses:
         '200':
           description: Request was successful
           schema:
-            description: The messageID
-            type: string
+            $ref: '#/definitions/Message-ID'
       deprecated: false
   /OutlookCalendars/IsConflict:
     post:
@@ -1062,7 +1062,21 @@ definitions:
     required:
       - email
     additionalProperties: false
-basePath: /cloud-accelerator-cognitive-business/sb/api
+  Message-Subject:
+    properties:
+      message-subject:
+        type: string
+    additionalProperties: false
+    required:
+      - message-subject
+  Message-ID:
+    properties:
+      message-id:
+        type: string
+    additionalProperties: false
+    required:
+      - message-id
+basePath: /api
 swagger: '2.0'
 info:
   x-ibm-name: cognitive-business
@@ -1070,7 +1084,7 @@ info:
   title: cognitive-business
 schemes:
   - https
-host: 'https://api.us.apiconnect.ibmcloud.com/'
+host: $(catalog.host)
 consumes:
   - application/json
 produces:
@@ -1084,9 +1098,6 @@ securityDefinitions:
     in: header
     name: X-IBM-Client-Secret
     type: apiKey
-security:
-  - clientIdHeader: []
-    clientSecretHeader: []
 x-ibm-configuration:
   testable: true
   enforced: true
@@ -1114,3 +1125,6 @@ x-ibm-configuration:
       value: ''
       description: ''
       encoded: false
+security:
+  - clientIdHeader: []
+    clientSecretHeader: []

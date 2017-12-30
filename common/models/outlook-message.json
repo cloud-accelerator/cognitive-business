@@ -121,8 +121,8 @@
     "FindMessageIDForSubject": {
       "accepts": [
         {
-          "arg": "subject",
-          "type": "string",
+          "arg": "message-subject",
+          "type": "Message-Subject",
           "required": true,
           "description": "The subject of the email"
         }
@@ -130,7 +130,7 @@
       "returns": [
         {
           "arg": "messageID",
-          "type": "string",
+          "type": "Message-ID",
           "root": true,
           "description": "The messageID"
         }

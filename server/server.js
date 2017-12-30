@@ -2,8 +2,11 @@
 
 var loopback = require('loopback');
 var boot = require('loopback-boot');
+//var multer = require('multer');
 
 var app = module.exports = loopback();
+
+//app.use(multer().any());
 
 app.start = function() {
   // start the web server
