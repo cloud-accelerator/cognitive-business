@@ -6,44 +6,8 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {
-    "messageID": {
-      "type": "string",
-      "required": true
-    }
-  },
-  "validations": [],
-  "relations": {},
-  "acls": [],
   "methods": {
-    "prototype.getMessageWithID": {
-      "accepts": [
-        {
-          "arg": "subject",
-          "type": "string",
-          "required": true,
-          "description": "The subject line of the email",
-          "http": {
-            "source": "query"
-          }
-        }
-      ],
-      "returns": [
-        {
-          "arg": "messageID",
-          "type": "string",
-          "root": false,
-          "description": "The messageid corresponding to the subject"
-        }
-      ],
-      "description": "Returns the messageID for a subject",
-      "http": [
-        {
-          "verb": "post"
-        }
-      ]
-    },
-    "moveEmailToInProgress": {
+    "MoveEmailToInProgress": {
       "accepts": [
         {
           "arg": "messageID",
@@ -121,8 +85,8 @@
     "FindMessageIDForSubject": {
       "accepts": [
         {
-          "arg": "message-subject",
-          "type": "Message-Subject",
+          "arg": "messageSubject",
+          "type": "string",
           "required": true,
           "description": "The subject of the email"
         }
@@ -130,7 +94,7 @@
       "returns": [
         {
           "arg": "messageID",
-          "type": "Message-ID",
+          "type": "string",
           "root": true,
           "description": "The messageID"
         }
@@ -142,6 +106,15 @@
           "verb": "post"
         }
       ]
+    },
+    "properties": {
+      "messageID": {
+        "type": "string",
+        "required": true
+      }
     }
-  }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": []
 }

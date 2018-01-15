@@ -10,58 +10,40 @@
     "To": {
       "type": "string"
     },
-    "from": {
+    "From": {
       "type": "string"
     },
-    "subject": {
+    "Subject": {
       "type": "string"
     },
-    "NBN_AppDate": {
+    "NBNApptStart": {
       "type": "string"
     },
-    "NBN_ApptYear": {
+    "NBNApptEnd": {
       "type": "string"
     },
-    "NBN_ApptMonth": {
+    "TelstraApptStart": {
       "type": "string"
     },
-    "NBN_ApptDay": {
+    "TelstraApptEnd": {
       "type": "string"
     },
-    "Telstra_ApptDate": {
+    "ReferenceID": {
       "type": "string"
     },
-    "Telstra_ApptYear": {
+    "Message": {
       "type": "string"
     },
-    "Telstra": {
+    "NBNInvoiceNumber": {
       "type": "string"
     },
-    "Telstra_ApptMonth": {
-      "type": "string"
-    },
-    "Telstra_ApptDay": {
-      "type": "string"
-    },
-    "NBN_Start": {
-      "type": "string"
-    },
-    "NBN_End": {
-      "type": "string"
-    },
-    "Telstra_Start": {
-      "type": "string"
-    },
-    "Telstra_End": {
-      "type": "string"
-    },
-    "Reference_ID": {
-      "type": "string"
-    },
-    "NBN_InvoiceNumber": {
+    "NBNBroadbandNumber": {
       "type": "string"
     },
     "EmailTypeIndicator": {
+      "type": "string"
+    },
+    "EmailType": {
       "type": "string"
     },
     "Address": {
@@ -70,13 +52,34 @@
     "Suburb": {
       "type": "string"
     },
-    "Postcode": {
-      "type": "string"
-    },
     "State": {
       "type": "string"
     },
+    "Postcode": {
+      "type": "string"
+    },
     "CaseMgrEmail": {
+      "type": "string"
+    },
+    "CaseMgrName": {
+      "type": "string"
+    },
+    "AAARecipient": {
+      "type": "string"
+    },
+    "Prerequisite": {
+      "type": "string"
+    },
+    "Details": {
+      "type": "string"
+    },
+    "CustomerName": {
+      "type": "string"
+    },
+    "TechnologyType": {
+      "type": "string"
+    },
+    "ActionRequired": {
       "type": "string"
     }
   },
@@ -105,79 +108,37 @@
           "description": "Email Subject"
         },
         {
-          "arg": "NBN_ApptDate",
+          "arg": "NBNApptStart",
           "type": "string",
           "required": false,
           "description": ""
         },
         {
-          "arg": "NBN_ApptYear",
+          "arg": "NBNApptEnd",
           "type": "string",
           "required": false,
           "description": ""
         },
         {
-          "arg": "NBN_ApptMonth",
+          "arg": "TelstraApptStart",
           "type": "string",
           "required": false,
           "description": ""
         },
         {
-          "arg": "NBN_ApptDay",
+          "arg": "TelstraApptEnd",
           "type": "string",
           "required": false,
           "description": ""
         },
         {
-          "arg": "Telstra_ApptDate",
+          "arg": "ReferenceID",
           "type": "string",
           "required": false,
           "description": ""
         },
         {
-          "arg": "Telstra_ApptYear",
-          "type": "string",
-          "required": false,
-          "description": ""
-        },
-        {
-          "arg": "Telstra_ApptMonth",
-          "type": "string",
-          "required": false,
-          "description": ""
-        },
-        {
-          "arg": "Telstra_ApptDay",
-          "type": "string",
-          "required": false,
-          "description": ""
-        },
-        {
-          "arg": "NBN_Start",
-          "type": "string",
-          "required": false,
-          "description": ""
-        },
-        {
-          "arg": "NBN_End",
-          "type": "string",
-          "required": false,
-          "description": ""
-        },
-        {
-          "arg": "Telstra_Start",
-          "type": "string",
-          "required": false,
-          "description": ""
-        },
-        {
-          "arg": "Telstra_End",
-          "type": "string",
-          "required": false,
-          "description": ""
-        },
-        {
-          "arg": "Reference_ID",
+          "arg": "Message",
           "type": "string",
           "required": false,
           "description": ""
@@ -189,7 +150,19 @@
           "description": ""
         },
         {
+          "arg": "NBNBroadbandNumber",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
           "arg": "EmailTypeIndicator",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "EmailType",
           "type": "string",
           "required": false,
           "description": ""
@@ -207,19 +180,61 @@
           "description": ""
         },
         {
-          "arg": "Postcode",
-          "type": "string",
-          "required": false,
-          "description": ""
-        },
-        {
           "arg": "State",
           "type": "string",
           "required": false,
           "description": ""
         },
         {
+          "arg": "Postcode",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
           "arg": "CaseMgrEmail",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "CaseMgrName",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "AAARecipient",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "Prerequisite",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "Details",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "CustomerName",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "TechnologyType",
+          "type": "string",
+          "required": false,
+          "description": ""
+        },
+        {
+          "arg": "ActionRequired",
           "type": "string",
           "required": false,
           "description": ""

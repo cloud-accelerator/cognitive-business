@@ -713,52 +713,24 @@ paths:
               greeting:
                 type: string
       deprecated: false
-  '/OutlookMessages/{id}/getMessageWithID':
-    post:
-      tags:
-        - OutlookMessage
-      summary: Returns the messageID for a subject
-      operationId: OutlookMessage.prototype.getMessageWithID
-      parameters:
-        - name: subject
-          in: query
-          description: The subject line of the email
-          required: true
-          type: string
-        - name: id
-          in: path
-          description: OutlookMessage id
-          required: true
-          type: string
-          format: JSON
-      responses:
-        '200':
-          description: Request was successful
-          schema:
-            type: object
-            properties:
-              messageID:
-                description: The messageid corresponding to the subject
-                type: string
-      deprecated: false
   /OutlookMessages/MoveEmailToInProgress:
     post:
       tags:
         - OutlookMessage
       summary: Moves an email to the in progress folder
-      operationId: OutlookMessage.moveEmailToInProgress
+      operationId: OutlookMessage.MoveEmailToInProgress
       parameters:
-        - name: messageID
-          in: formData
+        - name: data
+          in: body
           description: The message ID
           required: true
-          type: string
+          schema:
+            $ref: '#/definitions/MessageID'
       responses:
         '200':
           description: Request was successful
           schema:
-            description: The new message id
-            type: string
+            $ref: '#/definitions/MessageID'
       deprecated: false
   /OutlookMessages/MoveEmailToInReview:
     post:
@@ -767,17 +739,17 @@ paths:
       summary: Move an email to the in review folder
       operationId: OutlookMessage.MoveEmailToInReview
       parameters:
-        - name: messageID
-          in: formData
+        - name: data
+          in: body
           description: The email ID
           required: true
-          type: string
+          schema:
+            $ref: '#/definitions/MessageID'
       responses:
         '200':
           description: Request was successful
           schema:
-            description: The new email ID
-            type: string
+            $ref: '#/definitions/MessageID'
       deprecated: false
   /OutlookMessages/MoveEmailToCompleted:
     post:
@@ -786,17 +758,17 @@ paths:
       summary: Move the email to the completed folder
       operationId: OutlookMessage.MoveEmailToCompleted
       parameters:
-        - name: messageID
-          in: formData
+        - name: data
+          in: body
           description: The email ID
           required: true
-          type: string
+          schema:
+            $ref: '#/definitions/MessageID'
       responses:
         '200':
           description: Request was successful
           schema:
-            description: The new message id
-            type: string
+            $ref: '#/definitions/MessageID'
       deprecated: false
   /OutlookMessages/FindMessageIDForSubject:
     post:
@@ -805,17 +777,17 @@ paths:
       summary: Finds the message ID for email with a subject in the inbox folder
       operationId: OutlookMessage.FindMessageIDForSubject
       parameters:
-        - name: message-subject
+        - name: data
           in: body
           description: The subject of the email
           required: true
           schema:
-            $ref: '#/definitions/Message-Subject'
+            $ref: '#/definitions/MessageSubject'
       responses:
         '200':
           description: Request was successful
           schema:
-            $ref: '#/definitions/Message-ID'
+            $ref: '#/definitions/MessageID'
       deprecated: false
   /OutlookCalendars/IsConflict:
     post:
@@ -824,24 +796,17 @@ paths:
       summary: Returns if there is a conflict in the calendar
       operationId: OutlookCalendar.IsConflict
       parameters:
-        - name: startTime
-          in: formData
-          description: start time utc
+        - name: data
+          in: body
+          description: calendarEntry
           required: true
-          type: number
-          format: double
-        - name: endTime
-          in: formData
-          description: end time utc
-          required: true
-          type: number
-          format: double
+          schema:
+            $ref: '#/definitions/OutlookCalendar'
       responses:
         '200':
           description: Request was successful
           schema:
-            description: true if there is a conflict
-            type: boolean
+            $ref: '#/definitions/CalendarConflict'
       deprecated: false
   /OutlookCalendars/RemoveConflictingEvents:
     post:
@@ -850,18 +815,12 @@ paths:
       summary: Removes conflicting events in the calendar
       operationId: OutlookCalendar.RemoveConflictingEvents
       parameters:
-        - name: startTime
-          in: formData
-          description: start time utc
+        - name: data
+          in: body
+          description: Remove during event times
           required: true
-          type: number
-          format: double
-        - name: endTime
-          in: formData
-          description: end time UTC
-          required: true
-          type: number
-          format: double
+          schema:
+            $ref: '#/definitions/OutlookCalendar'
       responses:
         '204':
           description: Request was successful
@@ -873,23 +832,12 @@ paths:
       summary: add a new calendar event
       operationId: OutlookCalendar.AddEvent
       parameters:
-        - name: startTime
-          in: formData
-          description: start time UTC
+        - name: data
+          in: body
+          description: Calendar Event
           required: true
-          type: number
-          format: double
-        - name: endTime
-          in: formData
-          description: end time UTC
-          required: true
-          type: number
-          format: double
-        - name: subject
-          in: formData
-          description: name of event
-          required: true
-          type: string
+          schema:
+            $ref: '#/definitions/OutlookCalendar'
       responses:
         '204':
           description: Request was successful
@@ -900,126 +848,17 @@ paths:
         - WKSSharepoint
       summary: Adds WKS data to sharepoint
       operationId: WKSSharepoint.AddToSharepoint
-      parameters:
-        - name: To
-          in: formData
-          description: To Email
-          required: false
-          type: string
-        - name: From
-          in: formData
-          description: From Email
-          required: false
-          type: string
-        - name: Subject
-          in: formData
-          description: Email Subject
-          required: false
-          type: string
-        - name: NBN_ApptDate
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: NBN_ApptYear
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: NBN_ApptMonth
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: NBN_ApptDay
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: Telstra_ApptDate
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: Telstra_ApptYear
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: Telstra_ApptMonth
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: Telstra_ApptDay
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: NBN_Start
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: NBN_End
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: Telstra_Start
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: Telstra_End
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: Reference_ID
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: NBNInvoiceNumber
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: EmailTypeIndicator
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: Address
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: Suburb
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: Postcode
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: State
-          in: formData
-          description: ''
-          required: false
-          type: string
-        - name: CaseMgrEmail
-          in: formData
-          description: ''
-          required: false
-          type: string
       responses:
         '204':
           description: Request was successful
       deprecated: false
+      parameters:
+        - name: data
+          required: false
+          in: body
+          schema:
+            $ref: '#/definitions/WKSSharepoint'
+          description: Data for SharePoint table
 definitions:
   x-any:
     properties: {}
@@ -1062,20 +901,123 @@ definitions:
     required:
       - email
     additionalProperties: false
-  Message-Subject:
+  MessageID:
     properties:
-      message-subject:
+      messageID:
         type: string
     additionalProperties: false
     required:
-      - message-subject
-  Message-ID:
+      - messageID
+  MessageSubject:
     properties:
-      message-id:
+      messageSubject:
         type: string
     additionalProperties: false
     required:
-      - message-id
+      - messageSubject
+  CalendarConflict:
+    properties:
+      isConflict:
+        type: boolean
+        description: True if there is a conflict
+    additionalProperties: false
+  OutlookCalendar:
+    properties:
+      subject:
+        type: string
+        description: Name of Entry
+      startTime:
+        type: string
+        description: startTime
+      endTime:
+        type: string
+        description: endTime
+      timeZone:
+        type: string
+        description: time zone
+    additionalProperties: false
+    required:
+      - startTime
+      - endTime
+      - timeZone
+  WKSSharepoint:
+    properties:
+      To:
+        type: string
+        description: To Email
+      From:
+        type: string
+        description: From Email
+      Subject:
+        type: string
+        description: Email Subject
+      NBNApptStart:
+        type: string
+        description: NBN Appointment Start Date
+      NBNApptEnd:
+        type: string
+        description: NBN Appointment End Date
+      TelstraApptStart:
+        type: string
+        description: Telstra Appointment Start Date
+      TelstraApptEnd:
+        type: string
+        description: Telstra Appointment End Date
+      ReferenceID:
+        type: string
+        description: Reference ID
+      Message:
+        type: string
+        description: MEssage
+      NBNInvoiceNumber:
+        type: string
+        description: NBN Invoice Number
+      NBNBroadbandNumber:
+        type: string
+        description: NBN Broadband Nuumber
+      EmailTypeIndicator:
+        type: string
+        description: Email Type Indicator
+      EmailType:
+        type: string
+        description: Email Type
+      Address:
+        type: string
+        description: Address
+      Suburb:
+        type: string
+        description: Suburb
+      State:
+        type: string
+        description: State
+      Postcode:
+        type: string
+        description: Postcode
+      CaseMgrEmail:
+        type: string
+        description: Case Manager Email
+      CaseMgrName:
+        type: string
+        description: Case Manager Name
+      AAARecipient:
+        type: string
+        description: AAA Recipient
+      Prerequisite:
+        type: string
+        description: Prerequsite
+      Details:
+        type: string
+        description: Details
+      CustomerName:
+        type: string
+        description: Customer Name
+      TechnologyType:
+        type: string
+        description: Technology Type
+      ActionRequired:
+        type: string
+        description: Action Required
+    additionalProperties: false
 basePath: /api
 swagger: '2.0'
 info:
@@ -1090,14 +1032,9 @@ consumes:
 produces:
   - application/json
 securityDefinitions:
-  clientIdHeader:
-    type: apiKey
-    in: header
-    name: X-IBM-Client-Id
-  clientSecretHeader:
-    in: header
-    name: X-IBM-Client-Secret
-    type: apiKey
+  basicAuthentication:
+    type: basic
+    description: ''
 x-ibm-configuration:
   testable: true
   enforced: true
@@ -1126,5 +1063,4 @@ x-ibm-configuration:
       description: ''
       encoded: false
 security:
-  - clientIdHeader: []
-    clientSecretHeader: []
+  - basicAuthentication: []

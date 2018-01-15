@@ -7,8 +7,8 @@ const inProgressID = 'AAMkADQ1MTkwZTZmLTM4YjItNDdhMy1iYTA4LTVhNTgxMjNjZDk3MQAuAA
 const inReview =  'AAMkADQ1MTkwZTZmLTM4YjItNDdhMy1iYTA4LTVhNTgxMjNjZDk3MQAuAAAAAABb--bRI-yrTKkcCPmkdRVRAQAo4Gheq6DvQJCeRfV5YOb9AAAFxZoZAAA=';
 const completed = 'AAMkADQ1MTkwZTZmLTM4YjItNDdhMy1iYTA4LTVhNTgxMjNjZDk3MQAuAAAAAABb--bRI-yrTKkcCPmkdRVRAQAo4Gheq6DvQJCeRfV5YOb9AAAFxZoYAAA=';
 
-module.exports = function(Outlookmessage) {
-  Outlookmessage.moveEmailToInProgress = function(msg, cb) {
+module.exports = function(OutlookMessage) {
+  OutlookMessage.MoveEmailToInProgress = function(msg, cb) {
     auth.getAccessToken().then(function(token) {
       moveMessageTo(token, msg, cb, inProgressID);
     }, function(error) {
@@ -16,7 +16,7 @@ module.exports = function(Outlookmessage) {
       cb(null, error);
     });
   };
-  Outlookmessage.MoveEmailToInReview = function(msg, cb) {
+  OutlookMessage.MoveEmailToInReview = function(msg, cb) {
     auth.getAccessToken().then(function(token) {
       moveMessageTo(token, msg, cb, inReview);
     }, function(error) {
@@ -24,7 +24,7 @@ module.exports = function(Outlookmessage) {
       cb(null, error);
     });
   };
-  Outlookmessage.MoveEmailToCompleted = function(msg, cb) {
+  OutlookMessage.MoveEmailToCompleted = function(msg, cb) {
     auth.getAccessToken().then(function(token) {
       moveMessageTo(token, msg, cb, completed);
     }, function(error) {
@@ -32,7 +32,7 @@ module.exports = function(Outlookmessage) {
       cb(null, error);
     });
   };
-  Outlookmessage.FindMessageIDForSubject = function(msg, cb) {
+  OutlookMessage.FindMessageIDForSubject = function(msg, cb) {
     auth.getAccessToken().then(function(token) {
       findMessageID(token, msg, cb);
     }, function(error) {
@@ -43,12 +43,13 @@ module.exports = function(Outlookmessage) {
 };
 
 
-var findMessageID = function(token, subject, cb) {
+var findMessageID = function(token, message, cb) {
   var body = {
   };
-  console.log('https://graph.microsoft.com/v1.0/users/' + demoUser + '/mailFolders/Inbox/messages?$filter=subject eq \'' + subject +  '\'');
+  console.log('https://graph.microsoft.com/v1.0/users/' + demoUser + '/mailFolders/Inbox/messages?$filter=subject eq \'' + message +  '\'');
+
   request.get({
-    url: 'https://graph.microsoft.com/v1.0/users/' + demoUser + '/mailFolders/Inbox/messages?$filter=subject eq \'' + subject +  '\'',
+    url: 'https://graph.microsoft.com/v1.0/users/' + demoUser + '/mailFolders/Inbox/messages?$filter=subject eq \'' + message +  '\'',
     headers: {
       'content-type': 'application/json',
       authorization: 'Bearer ' + token
@@ -62,20 +63,10 @@ var findMessageID = function(token, subject, cb) {
       cb(err);
     } else if (body) {
       parsedBody = JSON.parse(body);
-
-
       if (parsedBody.error) {
-        if (parsedBody.error.code === 'RequestBroker-ParseUri') {
-          console.error(
-            '>>> Error moving to in progress. Most likely due to this user having a MSA instead of an Office 365 account.'
-          );
-        } else {
-          console.error(
-            '>>> Error moving to in progress' + '.' + parsedBody.error.message
-          );
-        }
-        var error = new Error('Could not authenticate');
-        error.status = 401;
+        console.log(parsedBody.error);
+        var error = new Error(parsedBody.error.code);
+        error.status = 400;
         cb(error);
       } else if (parsedBody.value.length > 0) {
         console.log('>>> Successfully moved to in progess');
@@ -97,14 +88,14 @@ var findMessageID = function(token, subject, cb) {
 };
 
 
-var moveMessageTo = function(token, messageId, cb, folder) {
+var moveMessageTo = function(token, message, cb, folder) {
 
   var body = {
     'DestinationId': folder
   };
 
   request.post({
-    url: 'https://graph.microsoft.com/v1.0/users/' + demoUser + '/messages/' + messageId + '/move',
+    url: 'https://graph.microsoft.com/v1.0/users/' + demoUser + '/messages/' + message + '/move',
     headers: {
       'content-type': 'application/json',
       authorization: 'Bearer ' + token
@@ -118,20 +109,10 @@ var moveMessageTo = function(token, messageId, cb, folder) {
       cb(err);
     } else if (body) {
       parsedBody = JSON.parse(body);
-
-
       if (parsedBody.error) {
-        if (parsedBody.error.code === 'RequestBroker-ParseUri') {
-          console.error(
-            '>>> Error moving to in progress. Most likely due to this user having a MSA instead of an Office 365 account.'
-          );
-        } else {
-          console.error(
-            '>>> Error moving to in progress' + '.' + parsedBody.error.message
-          );
-        }
-        var error = new Error('Could not authenticate');
-        error.status = 401;
+        console.log(parsedBody.error);
+        var error = new Error(parsedBody.error.code);
+        error.status = 400;
         cb(error);
       } else if (parsedBody.id) {
         console.log('>>> Successfully moved to in progess');

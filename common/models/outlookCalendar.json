@@ -28,15 +28,21 @@
       "accepts": [
         {
           "arg": "startTime",
-          "type": "number",
+          "type": "string",
           "required": true,
-          "description": "start time utc"
+          "description": "start time YYYY-MM-DD hh:mm:ss"
         },
         {
           "arg": "endTime",
-          "type": "number",
+          "type": "string",
           "required": true,
-          "description": "end time utc"
+          "description": "end time YYYY-MM-DD hh:mm:ss"
+        },
+        {
+          "arg": "timeZone",
+          "type": "string",
+          "required": true,
+          "description": "time zone"
         }
       ],
       "returns": [
@@ -59,15 +65,21 @@
       "accepts": [
         {
           "arg": "startTime",
-          "type": "number",
+          "type": "string",
           "required": true,
-          "description": "start time utc"
+          "description": "start time YYYY-MM-DD hh:mm:ss"
         },
         {
           "arg": "endTime",
-          "type": "number",
+          "type": "string",
           "required": true,
-          "description": "end time UTC"
+          "description": "end time YYYY-MM-DD hh:mm:ss"
+        },
+        {
+          "arg": "timeZone",
+          "type": "string",
+          "required": true,
+          "description": "time zone"
         }
       ],
       "returns": [],
@@ -83,21 +95,27 @@
       "accepts": [
         {
           "arg": "startTime",
-          "type": "number",
+          "type": "string",
           "required": true,
-          "description": "start time UTC"
+          "description": "start time UTC YYYY-MM-DD hh:mm:ss"
         },
         {
           "arg": "endTime",
-          "type": "number",
+          "type": "string",
           "required": true,
-          "description": "end time UTC"
+          "description": "end time UTC YYYY-MM-DD hh:mm:ss"
         },
         {
           "arg": "subject",
           "type": "string",
           "required": true,
           "description": "name of event"
+        },
+        {
+          "arg": "timeZone",
+          "type": "string",
+          "required": true,
+          "description": "time zone"
         }
       ],
       "returns": [],
