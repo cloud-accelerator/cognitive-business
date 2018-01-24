@@ -6,6 +6,10 @@
   "options": {
     "validateUpsert": true
   },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
   "methods": {
     "MoveEmailToInProgress": {
       "accepts": [
@@ -113,8 +117,5 @@
         "required": true
       }
     }
-  },
-  "validations": [],
-  "relations": {},
-  "acls": []
+  }
 }
