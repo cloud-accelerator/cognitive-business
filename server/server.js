@@ -1,27 +1,30 @@
 'use strict';
 
-var loopback = require('loopback');
-var boot = require('loopback-boot');
-var request = require('request');
-var bodyParser = require('body-parser');
-const demoUser = 'f03c8610-3598-430a-ad6e-b449b680cb93';
-var auth = require('./boot/msauth');
+let loopback = require('loopback');
+let boot = require('loopback-boot');
+let request = require('request').defaults({strictSSL: false});
+let bodyParser = require('body-parser');
+let auth = require('./msauth');
+let config = require('./config.local.js');
 
-var app = module.exports = loopback();
+let app = module.exports = loopback();
 
+const demoUser = config.office365User;
+const urlToNLU = config.urlToNLU;
+console.log(demoUser);
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.start = function() {
   // start the web server
   return app.listen(function() {
     app.emit('started');
-    var baseUrl = app.get('url').replace(/\/$/, '');
+    let baseUrl = app.get('url').replace(/\/$/, '');
     console.log('Web server listening at: %s', baseUrl);
     if (app.get('loopback-component-explorer')) {
-      var explorerPath = app.get('loopback-component-explorer').mountPath;
+      let explorerPath = app.get('loopback-component-explorer').mountPath;
       console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
     }
   });
@@ -34,9 +37,9 @@ app.post('/outlook-subscription', function(req, res, next) {
   } else if (req.body) {
 
     auth.getAccessToken().then(function(token) {
-      for (var i = 0; i < req.body.value.length; i++) {
-        var message = req.body.value[i];
-        var resourceData = message.resourceData;
+      for (let i = 0; i < req.body.value.length; i++) {
+        let message = req.body.value[i];
+        let resourceData = message.resourceData;
         console.log(resourceData.id);
         request.get({
           url: 'https://graph.microsoft.com/v1.0/users/' + demoUser + '/messages/' + resourceData.id,
@@ -47,9 +50,9 @@ app.post('/outlook-subscription', function(req, res, next) {
           }
         }, function (err, response, body) {
           console.log(err);
-          var email = JSON.parse(response.body);
+          let email = JSON.parse(response.body);
           console.log(email);
-          var returnBody = {
+          let returnBody = {
             subject: email.subject.replace(/n(\r\n)+/g, ' ').replace(/\r+/g, ' ').replace(/\n+/g, ' '),
             text: email.body.content.replace(/n(\r\n)+/g, ' ').replace(/\r+/g, ' ').replace(/\n+/g, ' '),
             from: email.sender.emailAddress.address,
@@ -57,12 +60,12 @@ app.post('/outlook-subscription', function(req, res, next) {
             messageID: email.id
           };
           request.post({
-            url: 'https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/a1b20f9ed73ead3ccbc59b82f39dc293f3679a2e03d78386c7ded4d62fcd0002/cognitive-business/provide-email-to-nlu-to-bpm',
+            url: urlToNLU,
             body: returnBody,
             json: true
           }, function(err, response, body) {
             console.log(err);
-            var body = { };
+            body = { };
             res.status(200).send(body);
           });
         });
@@ -72,6 +75,25 @@ app.post('/outlook-subscription', function(req, res, next) {
     });
   }
 });
+
+app.post('/bpm', function(req, res, next) {
+
+  auth.getAccessToken().then(function(token) {
+    for (let i = 0; i < req.body.value.length; i++) {
+      let message = req.body.value[i];
+      let resourceData = message.resourceData;
+      console.log(resourceData.id);
+      request.get({
+        url: 'https://graph.microsoft.com/v1.0/users/' + demoUser + '/messages',
+        headers: {
+          'content-type': 'application/json',
+          authorization: 'Bearer ' + token,
+          'Prefer': 'outlook.body-content-type=' + '\"' + 'text' + '\"'
+        }
+      }, function (err, response, body) {
+
+});
+
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.

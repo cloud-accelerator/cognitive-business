@@ -1,11 +1,12 @@
 'use strict';
 
-var auth = require('./msauth');
-var request = require('request');
-var moment = require('moment');
-const calendarID = 'AAMkADQ1MTkwZTZmLTM4YjItNDdhMy1iYTA4LTVhNTgxMjNjZDk3MQBGAAAAAABb--bRI-yrTKkcCPmkdRVRBwAo4Gheq6DvQJCeRfV5YOb9AAAAAAEGAAAo4Gheq6DvQJCeRfV5YOb9AAAFxa3dAAA=';
-const demoUser = 'f03c8610-3598-430a-ad6e-b449b680cb93';
+let auth = require('../../server/msauth');
+let request = require('request');
+let moment = require('moment');
+let config = require('../../server/config.local.js');
 
+const calendarID = config.office365Calendar;
+const demoUser = config.office365User;
 
 module.exports = function(OutlookCalendar) {
   OutlookCalendar.RemoveConflictingEvents = function(startTime,
@@ -58,26 +59,24 @@ module.exports = function(OutlookCalendar) {
     });
   };
 
-  var removeConflictingEvent = function(token,
+  let removeConflictingEvent = function(token,
                                         startTime,
                                         endTime,
                                         timeZone,
                                         cb) {
-    var body = {
+    let body = {
       'DestinationId': folder
     };
-
-
   };
 
-  var isConflict = function(token,
+  let isConflict = function(token,
                             startTime,
                             endTime,
                             timeZone,
                             cb) {
 
 
-    var body = {
+    let body = {
     };
     console.log('outlook.timezone=' + '\"' + timeZone + '\"');
     request.get({
@@ -89,33 +88,33 @@ module.exports = function(OutlookCalendar) {
       },
       body: JSON.stringify(body)
     }, function(err, response, body) {
-      var returnBody = {};
+      let returnBody = {};
       if (err) {
         console.error('>>> Application error: ' + err);
         cb(err);
       } else if (body) {
-        var parsedBody = JSON.parse(body);
+        let parsedBody = JSON.parse(body);
         if (parsedBody.error) {
           console.log(parsedBody.error);
-          var error = new Error(parsedBody.error.code);
+          let error = new Error(parsedBody.error.code);
           error.status = 400;
           cb(error);
         } else {
           console.log('>>> Successfully added events');
-          var values = parsedBody.value;
+          let values = parsedBody.value;
 
-          var isConflict = false;
+          let isConflict = false;
 
-          var startBoundary = new Date(startTime);
-          var endBoundary = new Date(endTime);
+          let startBoundary = new Date(startTime);
+          let endBoundary = new Date(endTime);
 
-          for (var i = 0; i < values.length; i++) {
-            var id = values[i].id;
-            var start = new Date(values[i].start.dateTime);
-            var end = new Date(values[i].end.dateTime);
+          for (let i = 0; i < values.length; i++) {
+            let id = values[i].id;
+            let start = new Date(values[i].start.dateTime);
+            let end = new Date(values[i].end.dateTime);
 
-            var startInBoundary = startBoundary.getTime() >= start.getTime() && endBoundary.getTime() < start.getTime();
-            var endInBoundary = startBoundary.getTime() < end.getTime() && endBoundary.getTime() >= end.getTime();
+            let startInBoundary = startBoundary.getTime() >= start.getTime() && endBoundary.getTime() < start.getTime();
+            let endInBoundary = startBoundary.getTime() < end.getTime() && endBoundary.getTime() >= end.getTime();
 
             console.log(start);
             console.log(end);
@@ -139,13 +138,13 @@ module.exports = function(OutlookCalendar) {
 
 
 
-  var addEvent = function(token,
+  let addEvent = function(token,
                           startTime,
                           endTime,
                           timeZone,
                           subject,
                           cb) {
-    var body = {
+    let body = {
       'subject': subject,
       'start': {
         'dateTime': convertTime(startTime),
@@ -166,15 +165,15 @@ module.exports = function(OutlookCalendar) {
       body: JSON.stringify(body)
     }, function(err, response, body) {
       console.log(body);
-      var returnBody = {};
+      let returnBody = {};
       if (err) {
         console.error('>>> Application error: ' + err);
         cb(err);
       } else if (body) {
-        var parsedBody = JSON.parse(body);
+        let parsedBody = JSON.parse(body);
         if (parsedBody.error) {
           console.log(parsedBody.error);
-          var error = new Error(parsedBody.error.code);
+          let error = new Error(parsedBody.error.code);
           error.status = 400;
           cb(error);
         } else {
@@ -187,7 +186,7 @@ module.exports = function(OutlookCalendar) {
   };
 
   //dd-mm-hh hh:mm:ss
-  var convertTime = function(timeString) {
+  let convertTime = function(timeString) {
     return moment(timeString, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
   };
 };

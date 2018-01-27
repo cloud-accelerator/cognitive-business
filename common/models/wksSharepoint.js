@@ -1,10 +1,10 @@
 'use strict';
-var auth = require('./msauth');
-var request = require('request');
+let auth = require('../../server/msauth');
+let request = require('request');
 
-const demoUser = 'f03c8610-3598-430a-ad6e-b449b680cb93';
-const siteID = 'cloudaccelerator.sharepoint.com,2edc05d8-c30f-40ee-b9b4-f7d91fad37ff,21c44fc7-fd1b-4961-8da4-cb0d19517697';
-const listID = 'b09d2e9e-d0d1-4493-9fa4-2748df0109d1';
+let config = require('../../server/config.local.js');
+const siteID = config.sharepointSite;
+const listID = config.sharepointList;
 
 module.exports = function(WKSSharepoint) {
   WKSSharepoint.AddToSharepoint = function(to,
@@ -69,7 +69,7 @@ module.exports = function(WKSSharepoint) {
 };
 
 
-var addToSharePoint = function(token,
+let addToSharePoint = function(token,
                                to,
                                from,
                                subject,
@@ -96,9 +96,7 @@ var addToSharePoint = function(token,
                                technologyType,
                                actionRequired,
                                cb) {
-
-
-  var body = {
+  let body = {
     'fields': {
       'To': to,
       'From': from,
@@ -136,8 +134,8 @@ var addToSharePoint = function(token,
     },
     body: JSON.stringify(body)
   }, function(err, response, body) {
-    var parsedBody;
-    var returnBody = {};
+    let parsedBody;
+    let returnBody = {};
     if (err) {
       console.error('>>> Application error: ' + err);
       cb(err);
@@ -146,7 +144,7 @@ var addToSharePoint = function(token,
       console.log(parsedBody);
       if (parsedBody.error) {
         console.log(parsedBody.error);
-        var error = new Error(parsedBody.error.code);
+        let error = new Error(parsedBody.error.code);
         error.status = 400;
         cb(error);
       } else {
@@ -154,7 +152,7 @@ var addToSharePoint = function(token,
         cb(null, parsedBody);
       }
     } else {
-      var error = new Error('Not found');
+      let error = new Error('Not found');
       error.status = 400;
       cb(error);
     }

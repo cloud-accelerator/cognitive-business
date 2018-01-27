@@ -1,31 +1,28 @@
-/**
- * Created by admin on 17/12/2017.
- */
-var request = require('request');
-var Q = require('q');
-var config = require('./config');
+'use strict';
+
+let request = require('request');
+let Q = require('q');
+let config = require('./config.local.js');
 
 // The auth module object.
-var msauth = {};
+let msauth = {};
 
 // @name getAccessToken
 // @desc Makes a request for a token using client credentials.
 msauth.getAccessToken = function () {
-  var deferred = Q.defer();
+  let deferred = Q.defer();
 
   // These are the parameters necessary for the OAuth 2.0 Client Credentials Grant Flow.
   // For more information, see Service to Service Calls Using Client Credentials (https://msdn.microsoft.com/library/azure/dn645543.aspx).
-  var requestParams = {
+  let requestParams = {
     grant_type: 'client_credentials',
-    client_id: config.clientId,
-    client_secret: config.clientSecret,
+    client_id: config.azureClientId,
+    client_secret: config.azureClientSecret,
     resource: 'https://graph.microsoft.com'
   };
-
   // Make a request to the token issuing endpoint.
-  request.post({ url: config.tokenEndpoint, form: requestParams }, function (err, response, body) {
-    var parsedBody = JSON.parse(body);
-
+  request.post({url: config.azureTokenEndpoint, form: requestParams}, function(err, response, body) {
+    let parsedBody = JSON.parse(body);
     if (err) {
       deferred.reject(err);
     } else if (parsedBody.error) {

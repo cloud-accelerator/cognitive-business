@@ -1,11 +1,14 @@
 'use strict';
 
-var auth = require('./msauth');
-var request = require('request');
-const demoUser = 'f03c8610-3598-430a-ad6e-b449b680cb93';
-const inProgressID = 'AAMkADQ1MTkwZTZmLTM4YjItNDdhMy1iYTA4LTVhNTgxMjNjZDk3MQAuAAAAAABb--bRI-yrTKkcCPmkdRVRAQAo4Gheq6DvQJCeRfV5YOb9AAAFxZoXAAA=';
-const inReview =  'AAMkADQ1MTkwZTZmLTM4YjItNDdhMy1iYTA4LTVhNTgxMjNjZDk3MQAuAAAAAABb--bRI-yrTKkcCPmkdRVRAQAo4Gheq6DvQJCeRfV5YOb9AAAFxZoZAAA=';
-const completed = 'AAMkADQ1MTkwZTZmLTM4YjItNDdhMy1iYTA4LTVhNTgxMjNjZDk3MQAuAAAAAABb--bRI-yrTKkcCPmkdRVRAQAo4Gheq6DvQJCeRfV5YOb9AAAFxZoYAAA=';
+let auth = require('../../server/msauth');
+let request = require('request');
+
+let config = require('../../server/config.local.js');
+
+const demoUser = config.office365User;
+const inProgressID = config.outlookInProgressFolder;
+const inReview = config.outlookInReviewFolder;
+const completed = config.outlookCompletedFolder;
 
 module.exports = function(OutlookMessage) {
   OutlookMessage.MoveEmailToInProgress = function(msg, cb) {
@@ -43,10 +46,9 @@ module.exports = function(OutlookMessage) {
 };
 
 
-var findMessageID = function(token, message, cb) {
-  var body = {
+let findMessageID = function(token, message, cb) {
+  let body = {
   };
-  console.log('https://graph.microsoft.com/v1.0/users/' + demoUser + '/mailFolders/Inbox/messages?$filter=subject eq \'' + message +  '\'');
 
   request.get({
     url: 'https://graph.microsoft.com/v1.0/users/' + demoUser + '/mailFolders/Inbox/messages?$filter=subject eq \'' + message +  '\'',
@@ -56,8 +58,8 @@ var findMessageID = function(token, message, cb) {
     },
     body: JSON.stringify(body)
   }, function(err, response, body) {
-    var parsedBody;
-    var returnBody = {};
+    let parsedBody;
+    let returnBody = {};
     if (err) {
       console.error('>>> Application error: ' + err);
       cb(err);
@@ -65,7 +67,7 @@ var findMessageID = function(token, message, cb) {
       parsedBody = JSON.parse(body);
       if (parsedBody.error) {
         console.log(parsedBody.error);
-        var error = new Error(parsedBody.error.code);
+        let error = new Error(parsedBody.error.code);
         error.status = 400;
         cb(error);
       } else if (parsedBody.value.length > 0) {
@@ -75,12 +77,12 @@ var findMessageID = function(token, message, cb) {
         };
         cb(null, returnBody);
       } else {
-        var error = new Error('Not found');
+        let error = new Error('Not found');
         error.status = 400;
         cb(error);
       }
     } else {
-      var error = new Error('Not found');
+      let error = new Error('Not found');
       error.status = 400;
       cb(error);
     }
@@ -88,9 +90,9 @@ var findMessageID = function(token, message, cb) {
 };
 
 
-var moveMessageTo = function(token, message, cb, folder) {
+let moveMessageTo = function(token, message, cb, folder) {
 
-  var body = {
+  let body = {
     'DestinationId': folder
   };
 
@@ -102,8 +104,8 @@ var moveMessageTo = function(token, message, cb, folder) {
     },
     body: JSON.stringify(body)
   }, function(err, response, body) {
-    var parsedBody;
-    var returnBody = {};
+    let parsedBody;
+    let returnBody = {};
     if (err) {
       console.error('>>> Application error: ' + err);
       cb(err);
@@ -111,7 +113,7 @@ var moveMessageTo = function(token, message, cb, folder) {
       parsedBody = JSON.parse(body);
       if (parsedBody.error) {
         console.log(parsedBody.error);
-        var error = new Error(parsedBody.error.code);
+        let error = new Error(parsedBody.error.code);
         error.status = 400;
         cb(error);
       } else if (parsedBody.id) {
@@ -121,12 +123,12 @@ var moveMessageTo = function(token, message, cb, folder) {
         };
         cb(null, returnBody);
       } else {
-        var error = new Error('Not found');
+        let error = new Error('Not found');
         error.status = 400;
         cb(error);
       }
     } else {
-      var error = new Error('Not found');
+      let error = new Error('Not found');
       error.status = 400;
       cb(error);
     }
